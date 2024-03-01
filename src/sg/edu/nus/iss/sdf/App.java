@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
 
@@ -25,12 +27,7 @@ public class App {
         if (args.length != 0) {
             String fileName = args[0];
             List<String> pokemons = fs.ReadCSV(fileName);
-            // for (int i = 0; i < pokemons.size(); i++) {
-            // System.out.printf("id%s: %s\n", String.valueOf(i), pokemons.get(i));
-            // if ((i != 0) && (i%50) == 0 ) {
-            // stackMap.put(((int) 50/i), pokemons.subList(i-50, i-1));
-            // }
-            // }
+
             int partitionSize = 50;
             List<List<String>> partitions = new ArrayList<>();
 
@@ -42,14 +39,14 @@ public class App {
                 stackMap.put(i + 1, partitions.get(i));
             }
 
-            System.out.println(stackMap.toString());
+            // System.out.println(stackMap.toString());
 
         } else {
             throw new IllegalArgumentException("Pokemon stack file required.");
         }
 
         // tests
-
+        // printNext5StarsPokemon("5* Kyurem");
         // fs.writeAsCSV("hello,test", "src/Rush3.csv");
 
         while (!stop) {
@@ -58,16 +55,35 @@ public class App {
 
             switch (input) {
                 case "1":
-                    System.out.println("Selection 1");
+                    boolean pass = false;
+                    while (!pass) {
+                        String stackInput = cons.readLine("Display the list of unique Pokemon in stack (1-8) >\n");
+                        Integer stackNo = 0;
+                        try {
+                            stackNo = Integer.parseInt(stackInput);
+                        } catch (NumberFormatException e) {
+                            System.err.println("Input is not an integer.");
+                        }
+                        if (stackNo >= 1 && stackNo <= 8) {
+                            printUniquePokemonStack(stackNo);
+                            pass = true;
+                        } else {
+                            System.err.println("Invalid stack number.");
+                        }
+                    }
+                    pressAnyKeyToContinue();
                     break;
                 case "2":
-                    System.out.println("Selection 2");
+                    String pokemonInput = cons.readLine(
+                            "Search for the next occurence of 5 stars Pokemon in all stacks base on entered Pokemon >\n");
+                    printNext5StarsPokemon(pokemonInput.trim());
+                    pressAnyKeyToContinue();
                     break;
                 case "3":
                     String pokemonStack = cons.readLine("Create a new Pokemon stack and save to a new file >\n");
                     String filename = cons.readLine("Enter filename to save (e.g. path/filename.csv) >\n");
                     savePokemonStack(pokemonStack, filename);
-
+                    pressAnyKeyToContinue();
                     break;
                 case "4":
 
@@ -96,7 +112,8 @@ public class App {
     // Task 1
     public static void pressAnyKeyToContinue() {
         // your code here
-        // figure out how to continue
+        Console cons = System.console();
+        String anyKey = cons.readLine("Press any key to continue...");
     }
 
     // Task 1
@@ -134,11 +151,49 @@ public class App {
     // Task 2
     public static void printUniquePokemonStack(Integer stack) {
         // Task 2 - your code here
+        List<String> list = stackMap.get(stack);
+        Set<String> set = new HashSet<>(list);
+        List<?> uniqueList = new ArrayList<>(set);
+        for (int i = 0; i < uniqueList.size(); i++) {
+            System.out.printf("%d ==> %s\n", i + 1, uniqueList.get(i));
+        }
+
     }
 
     // Task 2
     public static void printNext5StarsPokemon(String enteredPokemon) {
         // Task 2 - your code here
+        for (Map.Entry<Integer, List<String>> entry : stackMap.entrySet()) {
+            Integer stackNo = entry.getKey();
+            List<String> value = entry.getValue();
+            boolean found = false;
+
+            System.out.println("Set " + stackNo);
+
+            for (int i = 0; i < value.size(); i++) {
+                if (value.get(i).contains(enteredPokemon)) {
+                    found = true;
+                    boolean found5 = false;
+                    for (int j = i; j < value.size(); j++) {
+                        if (value.get(j).contains("5*")) {
+                            found5 = true;
+                            System.out.println(value.get(j) + ">>>" + (j - i) + " cards to go");
+                            break;
+                        }
+                    }
+                    if (!found5) {
+                        System.out.println("No 5 stars Pokemon found subsequently in the stack");
+                    }
+                    break;
+                }
+            }
+
+            if (!found) {
+                System.out.println(enteredPokemon + " not found in this set.");
+
+            }
+
+        }
 
     }
 
