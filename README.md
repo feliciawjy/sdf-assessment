@@ -1,8 +1,9 @@
 ## Getting Started
 
 Compile:
-javac --source-path src -d bin src/App.java src/FileService.java
-Run: java -cp bin App
+javac --source-path src -d bin src/sg/edu/nus/iss/sdf/App.java src/sg/edu/nus/iss/sdf/FileService.java
+Run:
+java -cp bin sg.edu.nus.iss.sdf.App
 
 ## Folder Structure
 
