@@ -48,8 +48,8 @@ public class FileService {
 
             pokemonsList = ReadCSV(fullPathFilename);
 
-            try (// add to string list
-            Scanner sc = new Scanner(pokemons)) {
+            // add to string list
+            try (Scanner sc = new Scanner(pokemons)) {
                 sc.useDelimiter(",");
                 while (sc.hasNext()) {
                     pokemonsList.add(sc.next());

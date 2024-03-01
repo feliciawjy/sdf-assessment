@@ -62,8 +62,13 @@ public class Main {
                             System.err.println("Input is not an integer.");
                         }
                         if (stackNo >= 1 && stackNo <= 8) {
-                            printUniquePokemonStack(stackNo);
-                            pass = true;
+                            try {
+                                printUniquePokemonStack(stackNo);
+                                pass = true;
+                            } catch (NullPointerException e) {
+                                System.err.println("beyond available stack number.");
+                            }
+
                         } else {
                             System.err.println("Invalid stack number.");
                         }
@@ -143,7 +148,7 @@ public class Main {
 
         // map
         stackMap.put(stackMap.size(), new ArrayList<String>(Arrays.asList(pokemonStack.split(","))));
-        System.out.println(stackMap.toString());
+        System.out.println(stackMap.get(stackMap.size()));
     }
 
     // Task 2
@@ -226,8 +231,9 @@ public class Main {
                     }
                 });
 
-        for (int i = 0; i < 10 ; i++) {
-            System.out.printf("Pokemon %d : %s, Cards Count: %d\n",i+1,sortedEntries.get(i).getKey(),sortedEntries.get(i).getValue());
+        for (int i = 0; i < 10; i++) {
+            System.out.printf("Pokemon %d : %s, Cards Count: %d\n", i + 1, sortedEntries.get(i).getKey(),
+                    sortedEntries.get(i).getValue());
 
         }
 
