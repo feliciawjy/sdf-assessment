@@ -4,11 +4,18 @@ import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class App {
 
@@ -86,7 +93,8 @@ public class App {
                     pressAnyKeyToContinue();
                     break;
                 case "4":
-
+                    printPokemonCardCount();
+                    pressAnyKeyToContinue();
                     break;
 
                 case "q":
@@ -200,6 +208,45 @@ public class App {
     // Task 2
     public static void printPokemonCardCount() {
         // Task 2 - your code here
+        Map<String, Integer> countMap = new HashMap<>();
+        List<String> allPokemon = new ArrayList<>();
+        for (List<String> value : stackMap.values()) {
+            for (String pokemon : value) {
+                allPokemon.add(pokemon);
+            }
+        }
+        // System.out.println(allPokemon.toString());
+
+        for (String pokemon : allPokemon) {
+            if (countMap.containsKey(pokemon)) {
+                countMap.put(pokemon, countMap.get(pokemon) + 1);
+
+            } else {
+                countMap.put(pokemon, 1);
+            }
+        }
+
+        // get highest count
+        // Map<String, Integer> sortedMap = countMap.entrySet().stream()
+        // .sorted(Entry.comparingByValue())
+        // .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+        // (e1, e2) -> e1, LinkedHashMap::new));
+
+        List<Entry<String, Integer>> sortedEntries = new ArrayList<Entry<String, Integer>>(countMap.entrySet());
+
+        Collections.sort(sortedEntries,
+                new Comparator<Entry<String, Integer>>() {
+                    @Override
+                    public int compare(Entry<String, Integer> e1, Entry<String, Integer> e2) {
+                        return e2.getValue().compareTo(e1.getValue());
+                    }
+                });
+
+        for (int i = 0; i < 10 ; i++) {
+            System.out.printf("Pokemon %d : %s, Cards Count: %d\n",i+1,sortedEntries.get(i).getKey(),sortedEntries.get(i).getValue());
+
+        }
+
     }
 
 }
