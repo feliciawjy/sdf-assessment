@@ -148,7 +148,7 @@ public class Main {
 
         // map
         stackMap.put(stackMap.size(), new ArrayList<String>(Arrays.asList(pokemonStack.split(","))));
-        System.out.println(stackMap.get(stackMap.size()));
+        // System.out.println(stackMap.get(stackMap.size()));
     }
 
     // Task 2
