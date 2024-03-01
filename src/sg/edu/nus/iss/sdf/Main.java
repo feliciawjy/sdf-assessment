@@ -8,16 +8,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class App {
+public class Main {
 
     // class level string array
     List<String> record = new ArrayList<>();
@@ -46,15 +42,9 @@ public class App {
                 stackMap.put(i + 1, partitions.get(i));
             }
 
-            // System.out.println(stackMap.toString());
-
         } else {
             throw new IllegalArgumentException("Pokemon stack file required.");
         }
-
-        // tests
-        // printNext5StarsPokemon("5* Kyurem");
-        // fs.writeAsCSV("hello,test", "src/Rush3.csv");
 
         while (!stop) {
             printHeader();
@@ -121,7 +111,7 @@ public class App {
     public static void pressAnyKeyToContinue() {
         // your code here
         Console cons = System.console();
-        String anyKey = cons.readLine("Press any key to continue...");
+        cons.readLine("Press any key to continue...");
     }
 
     // Task 1
@@ -225,12 +215,6 @@ public class App {
                 countMap.put(pokemon, 1);
             }
         }
-
-        // get highest count
-        // Map<String, Integer> sortedMap = countMap.entrySet().stream()
-        // .sorted(Entry.comparingByValue())
-        // .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
-        // (e1, e2) -> e1, LinkedHashMap::new));
 
         List<Entry<String, Integer>> sortedEntries = new ArrayList<Entry<String, Integer>>(countMap.entrySet());
 

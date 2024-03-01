@@ -1,9 +1,9 @@
 ## Getting Started
 
 - Compile:
-javac --source-path src -d bin src/sg/edu/nus/iss/sdf/App.java src/sg/edu/nus/iss/sdf/FileService.java
+javac --source-path src -d bin src/sg/edu/nus/iss/sdf/Main.java src/sg/edu/nus/iss/sdf/FileService.java
 - Run:
-java -cp bin sg.edu.nus.iss.sdf.App
+java -cp bin sg.edu.nus.iss.sdf.Main bin/Rush3.csv
 
 ## Folder Structure
 

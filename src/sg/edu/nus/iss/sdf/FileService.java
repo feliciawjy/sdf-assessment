@@ -48,20 +48,15 @@ public class FileService {
 
             pokemonsList = ReadCSV(fullPathFilename);
 
-            // add to string list
-            Scanner sc = new Scanner(pokemons);
-            sc.useDelimiter(",");
-            while (sc.hasNext()) {
-                pokemonsList.add(sc.next());
+            try (// add to string list
+            Scanner sc = new Scanner(pokemons)) {
+                sc.useDelimiter(",");
+                while (sc.hasNext()) {
+                    pokemonsList.add(sc.next());
+                }
             }
 
-            // write string list to csv
-            // System.out.println(record.toString());
-
             try (FileWriter fw = new FileWriter(fullPathFilename)) {
-                // fw.write(existingPokemons.stream().collect(Collectors.joining(",")));
-                // fw.write("\n");
-                // fw.write(record.stream().collect(Collectors.joining(",")));
                 int partitionSize = 50;
                 List<List<String>> partitions = new ArrayList<>();
 
